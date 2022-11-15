@@ -37,7 +37,9 @@ def copyFileName(base, toCopy)
   toCopyParent = Pathname.new(toCopy).parent
   baseChild = File.basename(base, File.extname(base))
   newName = "%s.en%s" % [baseChild, File.extname(toCopy)]
-  puts newName
+  puts "Renaming %s to %s" % [toCopy, newName]
+  completeName = File.join(toCopyParent, newName)
+  File.rename(toCopy, completeName)
 end
 
 def main()
