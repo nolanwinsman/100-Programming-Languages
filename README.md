@@ -7,3 +7,19 @@ To run, cd into the Julia folder and run
 ```sh
 Julia primes.jl
 ```
+
+## Future languages/potential projects
+- Assembly : Snake game
+- R
+- Kotlin
+- Java
+- C
+- C++
+- D
+- Brainfuck
+- HTML
+- SQL
+- Rust
+- Perl
+- Go
+- 
