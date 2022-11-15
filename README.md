@@ -22,4 +22,4 @@ Julia primes.jl
 - Rust
 - Perl
 - Go
-- 
+- Ruby : copy video file names to .srt files
