@@ -4,9 +4,17 @@ def loopThrough(directory)
     # file is a directory
     absolute = File.join(directory, filename)
     if File.directory?(absolute)
-     renameSrt(absolute)
+      procdir(absolute)
+      # renameSrt(absolute)
     end
   end
+end
+
+def procdir(dir)
+  all = Dir[ File.join(dir, '**', '*') ].reject do |f| 
+    File.directory?(f) or (File.extname(f) != '.srt' and File.extname(f) != '.mkv') 
+  end
+  puts all
 end
 
 def renameSrt(directory)
@@ -14,7 +22,6 @@ def renameSrt(directory)
   videos = []
   Dir.foreach(directory) do |filename|
     next if filename == '.' or filename == '..'
-    puts filename
     if File.extname(filename) == '.srt'
       srts.append(filename)
       puts filename
