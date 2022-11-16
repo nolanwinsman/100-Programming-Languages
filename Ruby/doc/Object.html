@@ -100,9 +100,9 @@
       </header>
       <dl>
         <dt id="SUB_EXTENSIONS">SUB_EXTENSIONS
-        <dd>
+        <dd><p>array of subtitle file extensions</p>
         <dt id="VIDEO_EXTENSIONS">VIDEO_EXTENSIONS
-        <dd>
+        <dd><p>array of video file extensions</p>
       </dl>
     </section>
 
@@ -121,14 +121,23 @@
         </div>
 
         <div class="method-description">
-          
+          <p>Takes in two parameters and copies the filename of one to the other. Adds .en to toCopy since it should be an english subtitle file</p>
+
+<p>Params:</p>
+<dl class="rdoc-list note-list"><dt><code>base</code>
+<dd>
+<p>the filename that is being copied</p>
+</dd><dt><code>toCopy</code>
+<dd>
+<p>the file that is copying the filename from param base</p>
+</dd></dl>
 
           <div class="method-source-code" id="copyFileName-source">
-            <pre><span class="ruby-comment"># File srt.rb, line 40</span>
+            <pre><span class="ruby-comment"># File srt.rb, line 57</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">copyFileName</span>(<span class="ruby-identifier">base</span>, <span class="ruby-identifier">toCopy</span>)
   <span class="ruby-identifier">toCopyParent</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">toCopy</span>).<span class="ruby-identifier">parent</span>
   <span class="ruby-identifier">baseChild</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">base</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">extname</span>(<span class="ruby-identifier">base</span>))
-  <span class="ruby-identifier">newName</span> = <span class="ruby-string">&quot;%s.en%s&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">baseChild</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">extname</span>(<span class="ruby-identifier">toCopy</span>)]
+  <span class="ruby-identifier">newName</span> = <span class="ruby-string">&quot;%s.en%s&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">baseChild</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">extname</span>(<span class="ruby-identifier">toCopy</span>)] <span class="ruby-comment"># adds .en for english subtitles</span>
   <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Renaming %s to %s&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">toCopy</span>, <span class="ruby-identifier">newName</span>]
   <span class="ruby-identifier">completeName</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">toCopyParent</span>, <span class="ruby-identifier">newName</span>)
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">rename</span>(<span class="ruby-identifier">toCopy</span>, <span class="ruby-identifier">completeName</span>)
@@ -147,10 +156,16 @@
         </div>
 
         <div class="method-description">
-          
+          <p>Finds the number of video files and subtitle files in a directory if there is only one video files and one subtitle file, it calls copyFileName on those two files</p>
+
+<p>Params:</p>
+<dl class="rdoc-list note-list"><dt><code>dir</code>
+<dd>
+<p>the directory this function is looking at</p>
+</dd></dl>
 
           <div class="method-source-code" id="findFiles-source">
-            <pre><span class="ruby-comment"># File srt.rb, line 20</span>
+            <pre><span class="ruby-comment"># File srt.rb, line 31</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">findFiles</span>(<span class="ruby-identifier">dir</span>)
   <span class="ruby-identifier">subs</span> = []
   <span class="ruby-identifier">videos</span> = []
@@ -184,10 +199,16 @@
         </div>
 
         <div class="method-description">
-          <p>Method Comment</p>
+          <p>loops through all files in the directory given as an argument if the file looped through is another directory, call findFiles() on that directory</p>
+
+<p>Params:</p>
+<dl class="rdoc-list note-list"><dt><code>directory</code>
+<dd>
+<p>the directory being looped through</p>
+</dd></dl>
 
           <div class="method-source-code" id="loopThrough-source">
-            <pre><span class="ruby-comment"># File srt.rb, line 9</span>
+            <pre><span class="ruby-comment"># File srt.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">loopThrough</span>(<span class="ruby-identifier">directory</span>)
   <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">foreach</span>(<span class="ruby-identifier">directory</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">filename</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;.&#39;</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">filename</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;..&#39;</span>
@@ -212,10 +233,10 @@
         </div>
 
         <div class="method-description">
-          
+          <p>main method checks that there is at least one argument if an argument is not provided, exits the program</p>
 
           <div class="method-source-code" id="main-source">
-            <pre><span class="ruby-comment"># File srt.rb, line 49</span>
+            <pre><span class="ruby-comment"># File srt.rb, line 69</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">main</span>()
   <span class="ruby-keyword">if</span> <span class="ruby-constant">ARGV</span>.<span class="ruby-identifier">empty?</span>
     <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Usage: #{ __FILE__ } &lt;path&gt;&quot;</span>

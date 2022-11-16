@@ -1,8 +1,10 @@
 require 'pathname'
 require 'rdoc/rdoc'
 
-VIDEO_EXTENSIONS = ['.mp4','.mkv'] # array of video file extensions
-SUB_EXTENSIONS = ['.srt'] # array of subtitle file extensions
+# array of video file extensions
+VIDEO_EXTENSIONS = ['.mp4','.mkv']
+# array of subtitle file extensions
+SUB_EXTENSIONS = ['.srt']
 
 
 # loops through all files in the directory given as an argument
