@@ -1,8 +1,15 @@
 require 'pathname'
+require 'rdoc/rdoc'
 
-VIDEO_EXTENSIONS = ['.mp4','.mkv']
-SUB_EXTENSIONS = ['.srt']
+VIDEO_EXTENSIONS = ['.mp4','.mkv'] # array of video file extensions
+SUB_EXTENSIONS = ['.srt'] # array of subtitle file extensions
 
+
+# loops through all files in the directory given as an argument
+# if the file looped through is another directory, call findFiles() on that directory
+#
+# Params:
+# +directory+:: the directory being looped through
 def loopThrough(directory)
   Dir.foreach(directory) do |filename|
     next if filename == '.' or filename == '..'
@@ -14,6 +21,11 @@ def loopThrough(directory)
   end
 end
 
+# Finds the number of video files and subtitle files in a directory
+# if there is only one video files and one subtitle file, it calls copyFileName on those two files
+#
+# Params:
+# +dir+:: the directory this function is looking at
 def findFiles(dir)
   subs = []
   videos = []
@@ -34,15 +46,24 @@ def findFiles(dir)
   end
 end
 
+# Takes in two parameters and copies the filename of one to the other.
+# Adds .en to toCopy since it should be an english subtitle file
+#
+# Params:
+# +base+:: the filename that is being copied
+# +toCopy+:: the file that is copying the filename from param base
 def copyFileName(base, toCopy)
   toCopyParent = Pathname.new(toCopy).parent
   baseChild = File.basename(base, File.extname(base))
-  newName = "%s.en%s" % [baseChild, File.extname(toCopy)]
+  newName = "%s.en%s" % [baseChild, File.extname(toCopy)] # adds .en for english subtitles
   puts "Renaming %s to %s" % [toCopy, newName]
   completeName = File.join(toCopyParent, newName)
   File.rename(toCopy, completeName)
 end
 
+# main method
+# checks that there is at least one argument
+# if an argument is not provided, exits the program
 def main()
   if ARGV.empty?
     puts "Usage: #{ __FILE__ } <path>"
