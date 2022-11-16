@@ -1,30 +1,31 @@
 require 'pathname'
 
+EXTENSIONS = ['.mp4','.mkv']
 
 def loopThrough(directory)
   Dir.foreach(directory) do |filename|
     next if filename == '.' or filename == '..'
-    # file is a directory
     absolute = File.join(directory, filename)
+    # file is a directory
     if File.directory?(absolute)
-      procdir(absolute)
-      # renameSrt(absolute)
+      findFiles(absolute)
     end
   end
 end
 
-def procdir(dir)
+def findFiles(dir)
   subs = []
   videos = []
   all = Dir[ File.join(dir, '**', '*') ].reject do |f| 
-    File.directory?(f) or (File.extname(f) != '.srt' and File.extname(f) != '.mp4') 
+    File.directory?(f) or EXTENSIONS.include? File.extname(f) 
   end
 
   all.each { |elem|
     if File.extname(elem) == '.srt'
       subs.append(elem)
     end
-    if File.extname(elem) == '.mp4'
+    if EXTENSIONS.include? File.extname(elem)
+      puts elem
       videos.append(elem)
     end
   }
@@ -48,8 +49,6 @@ def main()
     exit(2)
   end
   directory = ARGV[0]
-  puts directory
-
   loopThrough(directory)
 end
 
