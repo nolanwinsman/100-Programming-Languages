@@ -1,6 +1,7 @@
 require 'pathname'
 
-EXTENSIONS = ['.mp4','.mkv']
+VIDEO_EXTENSIONS = ['.mp4','.mkv']
+SUB_EXTENSIONS = ['.srt']
 
 def loopThrough(directory)
   Dir.foreach(directory) do |filename|
@@ -17,15 +18,14 @@ def findFiles(dir)
   subs = []
   videos = []
   all = Dir[ File.join(dir, '**', '*') ].reject do |f| 
-    File.directory?(f) or EXTENSIONS.include? File.extname(f) 
+    File.directory?(f) or (not SUB_EXTENSIONS.include? File.extname(f) and not VIDEO_EXTENSIONS.include? File.extname(f)) 
   end
 
   all.each { |elem|
-    if File.extname(elem) == '.srt'
+    if SUB_EXTENSIONS.include? File.extname(elem)
       subs.append(elem)
     end
-    if EXTENSIONS.include? File.extname(elem)
-      puts elem
+    if VIDEO_EXTENSIONS.include? File.extname(elem)
       videos.append(elem)
     end
   }
