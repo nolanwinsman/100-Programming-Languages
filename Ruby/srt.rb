@@ -1,5 +1,4 @@
 require 'pathname'
-require 'rdoc/rdoc'
 
 # array of video file extensions
 VIDEO_EXTENSIONS = ['.mp4','.mkv']
